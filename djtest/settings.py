@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # pollsアプリをこのプロジェクトに含める
+    # これを書いた後、以下を実行するとマイグレーションファイルが作られる
+    # $ python manage.py makemigrations polls
+    'polls.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [

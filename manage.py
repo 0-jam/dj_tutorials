@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# $ python manage.py runserverを実行すると動かせる
+# ポートはデフォルトで8000だが、runserverのオプションで変えられる
 import os
 import sys
 
