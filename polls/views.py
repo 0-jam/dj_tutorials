@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.urls import reverse
 
-from .models import Question
+from .models import Question, Choice
 
 # Create your views here.
 
@@ -35,5 +36,33 @@ def results(request, question_id):
     response = "You're looking at the results of question %s."
     return HttpResponse(response % question_id)
 
+## ユーザーのpostを受け取る
 def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
+    question = get_object_or_404(Question, pk=question_id)
+
+    try:
+        # request.POST['choice']：Railsのparams[:choice]に相当
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # 投票対象が選択されていない場合、投票フォームに戻る
+        return render(
+            request,
+            'polls/detail.html',
+            {
+                'question': question,
+                'error_message': "You didn't select a choice."
+            }
+        )
+    else:
+        # 投票数を更新
+        selected_choice.votes += 1
+        selected_choice.save()
+
+        # 戻るボタンを押したときに二重送信されるのを防ぐため、
+        # 送信されたデータを正しく処理できた場合のみリダイレクトする
+        # ハードコーディング防止のためにreverse()を使っている
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question': question})
