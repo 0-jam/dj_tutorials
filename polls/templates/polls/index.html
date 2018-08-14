@@ -1,0 +1,17 @@
+{% if latest_question_list %}
+  <ul>
+    {% for question in latest_question_list %}
+      {% comment %}
+        /polls/{{ question.id }}/とすることもできるが、その場合リンク先の頭にスラッシュを入れ忘れないように注意
+        （入れ忘れると"/polls/polls/<question.id>"に飛ぶ）
+        URLがハードコーディングされているので、チュートリアル中ではよくない例として紹介されていたし、
+        何より単純に書きにくいので使わない方がよさそう…
+      {% endcomment %}
+      <li>
+        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No polls are available.</p>
+{% endif %}
