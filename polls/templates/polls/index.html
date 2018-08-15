@@ -1,6 +1,6 @@
-{% if latest_question_list %}
+{% if latest_questions %}
   <ul>
-    {% for question in latest_question_list %}
+    {% for question in latest_questions %}
       {% comment %}
         /polls/{{ question.id }}/とすることもできるが、その場合リンク先の頭にスラッシュを入れ忘れないように注意
         （入れ忘れると"/polls/polls/<question.id>"に飛ぶ）
@@ -8,7 +8,8 @@
         何より単純に書きにくいので使わない方がよさそう…
       {% endcomment %}
       <li>
-        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>:
+        {{ question.pub_date }}
       </li>
     {% endfor %}
   </ul>

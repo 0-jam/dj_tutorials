@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
+
 # 汎用ビュー使用前は以下も必要
 # from django.http import HttpResponse, Http404
 
@@ -16,11 +18,13 @@ class IndexView(generic.ListView):
     # default: 'polls/question_list.html'(<app_name>/<model_name>_list.html)
     template_name = 'polls/index.html'
     # default: question_list
-    context_object_name = 'latest_question_list'
+    context_object_name = 'latest_questions'
 
     def get_queryset(self):
-        # 最新5件の質問を返す
-        return Question.objects.order_by('-pub_date')[:5]
+        # 最新5件のpub_dateが未来の日時でない質問を返す
+        # __lte: less than or equal to
+        # pub_date <= timezone.now() のようには書けない
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 class DetailView(generic.DetailView):
     # ここで表示したいモデルの名前を指定
@@ -64,11 +68,11 @@ def vote(request, question_id):
 ## pollsアプリケーション（Railsでいうコントローラー）の各アクション
 # def index(request):
 #     # 最新5件の質問
-#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
+#     latest_questions = Question.objects.order_by("-pub_date")[:5]
 
 #     # コントローラーからビューに渡したい変数
 #     context = {
-#         'latest_question_list': latest_question_list,
+#         'latest_questions': latest_questions,
 #     }
 
 #     # 以下と同じだが、長いので使わないほうがよさそう…

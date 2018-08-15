@@ -2,13 +2,15 @@
 
 from django.test import TestCase
 from django.utils import timezone
+from django.urls import reverse
 
 import datetime
 
 from .models import Question
+
 # Create your tests here.
 
-## テストクラスを作成
+## モデルのテストクラス
 # テストメソッド名は"test"で始めなくてはいけない
 class QuestionModelTests(TestCase):
     ## pub_dateが未来になっているときに「最近作られた」と誤判断されないか？
@@ -29,7 +31,7 @@ class QuestionModelTests(TestCase):
 
         self.assertIs(old_question.was_published_recently(), False)
 
-    ## pub_dateが最近になっているときに「最近作られた」と判断されるか？
+    ## pub_dateが最近になっているときに「最近作られた」と正しく判断されるか？
     def test_was_published_recently_with_recent_question(self):
         # あるQuestionオブジェクトrecent_questionのpub_dateが直近1日以内（ここでは23時間59分59秒前）になっているとき、
         # recent_question.was_published_recently()はTrueを返さなくてはならない
@@ -37,3 +39,69 @@ class QuestionModelTests(TestCase):
         recent_question = Question(pub_date=time)
 
         self.assertIs(recent_question.was_published_recently(), True)
+
+## Questionオブジェクトを作る
+def create_question(question_text, days):
+    time = timezone.now() + datetime.timedelta(days=days)
+
+    return Question.objects.create(question_text=question_text, pub_date=time)
+
+## ビューのテストクラス
+class QuestionIndexViewTests(TestCase):
+    # 質問が存在しないときの表示、各変数の状態
+    def test_no_questions(self):
+        response = self.client.get(reverse('polls:index'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No polls are available.")
+        self.assertQuerysetEqual(
+            response.context['latest_questions'],
+            []
+        )
+
+    # 過去の質問のみの表示、各変数の状態
+    def test_past_question(self):
+        create_question(question_text="Past question.", days=-30)
+
+        response = self.client.get(reverse('polls:index'))
+
+        self.assertQuerysetEqual(
+            response.context['latest_questions'],
+            ['<Question: Past question.>']
+        )
+
+    # 未来の質問のみの表示、各変数の状態
+    def test_future_question(self):
+        create_question(question_text="Future question.", days=30)
+
+        response = self.client.get(reverse('polls:index'))
+
+        self.assertContains(response, "No polls are available.")
+        self.assertQuerysetEqual(
+            response.context['latest_questions'],
+            []
+        )
+
+    # 過去と未来と両方に質問があるときの表示、各変数の状態
+    def test_future_and_past_questions(self):
+        create_question(question_text="Past question.", days=-30)
+        create_question(question_text="Future question.", days=30)
+
+        response = self.client.get(reverse('polls:index'))
+
+        self.assertQuerysetEqual(
+            response.context['latest_questions'],
+            ['<Question: Past question.>']
+        )
+
+    # 過去の質問が2つあるときの表示、各変数の状態
+    def test_two_past_questions(self):
+        create_question(question_text="Past question 1.", days=-30)
+        create_question(question_text="Past question 2.", days=-5)
+
+        response = self.client.get(reverse('polls:index'))
+
+        self.assertQuerysetEqual(
+            response.context['latest_questions'],
+            ['<Question: Past question 2.>', '<Question: Past question 1.>']
+        )

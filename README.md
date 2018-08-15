@@ -2,6 +2,7 @@
 
 - [Django][django]2.1の[チュートリアル][djtut]をなぞるだけ
 - 一部Railsで同じことをするためのコマンドなどをコメントに書いている
+- Python 3.7.0,  Django 2.1
 
 ---
 
@@ -22,16 +23,16 @@
 
 ## Memo
 
-- Railsでいう`latest_question_list.pluck(question_text)`
+- Railsでいう`latest_questions.pluck(question_text)`
     - pluck的なのないのかな？
 
 ```python
-latest_question_list = Question.objects.order_by("-pub_date")[:5]
-output = ', '.join([q.question_text for q in latest_question_list])
+latest_questions = Question.objects.order_by("-pub_date")[:5]
+output = ', '.join([q.question_text for q in latest_questions])
 ```
 
 - [ユニットテストで使うメソッド集][pyutest]
-    - `assertFalse()`というメソッドもあるが、pollsアプリケーションのテストは`assertIs()`で値を`False`そのものと比較している
+    - `assertFalse()`というメソッドもあるが、pollsアプリケーションのテストは`assertIs()`で値を **`False`そのものと比較** している
     - [Python3でFalse扱いされる数値][pyfalse]
         - `assertFalse()`はこれらと一致しているかを判定するらしい
         - `None`, `False`, 各種カラの値（ゼロや空文字列など）
