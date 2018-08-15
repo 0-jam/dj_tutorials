@@ -52,6 +52,11 @@ class Question(models.Model):
         # pub_dateが1日以内かつ今より過去に作られた場合にTrue
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+    # 管理画面用設定
+    was_published_recently.admin_order_field = 'pub_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Published recently?'
+
 ### 選択肢
 # $ rails g model choice question:references choice_text:string votes:integer
 ## ある質問事項qに関連した選択肢を取得するときは下のようにする

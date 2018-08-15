@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% comment %}
+  上の一文は1行目に書かれていなくてはならない（コメントもダメ）
+  以下のコマンドでコピーできる
+  $ mkdir -p templates/admin; cp $(python -c 'import django; print(django.__path__[0])')/contrib/admin/templates/admin/base_site.html templates/admin
+{% endcomment %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Polls Administration') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Polls Administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

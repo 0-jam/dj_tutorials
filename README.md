@@ -22,7 +22,7 @@
     - [ ] 選択肢がない質問も表示しないようにしよう
     - [テスト参考][djtesting]
 - [x] [Tutorial 06](https://docs.djangoproject.com/ja/2.1/intro/tutorial06/)
-- [ ] [Tutorial 07](https://docs.djangoproject.com/ja/2.1/intro/tutorial07/)
+- [x] [Tutorial 07](https://docs.djangoproject.com/ja/2.1/intro/tutorial07/)
 
 ## Memo
 
