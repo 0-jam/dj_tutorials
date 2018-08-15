@@ -21,7 +21,7 @@
     - [ ] ResultsViewのテストも作ってみよう
     - [ ] 選択肢がない質問も表示しないようにしよう
     - [テスト参考][djtesting]
-- [ ] [Tutorial 06](https://docs.djangoproject.com/ja/2.1/intro/tutorial06/)
+- [x] [Tutorial 06](https://docs.djangoproject.com/ja/2.1/intro/tutorial06/)
 - [ ] [Tutorial 07](https://docs.djangoproject.com/ja/2.1/intro/tutorial07/)
 
 ## Memo
@@ -39,6 +39,8 @@ output = ', '.join([q.question_text for q in latest_questions])
     - [Python3でFalse扱いされる数値][pyfalse]
         - `assertFalse()`はこれらと一致しているかを判定するらしい
         - `None`, `False`, 各種カラの値（ゼロや空文字列など）
+- チュートリアル6で扱う静的ファイルは、追加したあとサーバーを再起動する必要がある？
+    - チュートリアル中では _リロードすれば（中略）変わったはず_ とあるが、単にリロードするとstyle.cssをロードするときに404エラー
 
 [django]: http://djangoproject.jp/
 [djtut]: https://docs.djangoproject.com/ja/2.1/intro/
