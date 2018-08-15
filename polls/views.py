@@ -32,6 +32,10 @@ class DetailView(generic.DetailView):
     # default: 'polls/question_detail.html'(<app_name>/<model_name>_detail.html)
     template_name = 'polls/detail.html'
 
+    def get_queryset(self):
+        # 未来の質問を除外する
+        return Question.objects.filter(pub_date__lte=timezone.now())
+
 class ResultsView(generic.DetailView):
     model = Question
     # もちろん同じ汎用ビューに違うテンプレートを指定できる

@@ -17,7 +17,10 @@
 - [x] [Tutorial 02](https://docs.djangoproject.com/ja/2.1/intro/tutorial02/)
 - [x] [Tutorial 03](https://docs.djangoproject.com/ja/2.1/intro/tutorial03/)
 - [x] [Tutorial 04](https://docs.djangoproject.com/ja/2.1/intro/tutorial04/)
-- [ ] [Tutorial 05](https://docs.djangoproject.com/ja/2.1/intro/tutorial05/)
+- [x] [Tutorial 05](https://docs.djangoproject.com/ja/2.1/intro/tutorial05/)
+    - [ ] ResultsViewのテストも作ってみよう
+    - [ ] 選択肢がない質問も表示しないようにしよう
+    - [テスト参考][djtesting]
 - [ ] [Tutorial 06](https://docs.djangoproject.com/ja/2.1/intro/tutorial06/)
 - [ ] [Tutorial 07](https://docs.djangoproject.com/ja/2.1/intro/tutorial07/)
 
@@ -41,3 +44,4 @@ output = ', '.join([q.question_text for q in latest_questions])
 [djtut]: https://docs.djangoproject.com/ja/2.1/intro/
 [pyutest]: https://docs.python.jp/3/library/unittest.html
 [pyfalse]: https://docs.python.jp/3/library/stdtypes.html#truth-value-testing
+[djtesting]: https://docs.djangoproject.com/ja/2.1/topics/testing/
