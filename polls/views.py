@@ -1,40 +1,37 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
+# 汎用ビュー使用前は以下も必要
+# from django.http import HttpResponse, Http404
 
 from .models import Question, Choice
 
 # Create your views here.
 
-## pollsアプリケーション（Railsでいうコントローラー）の各アクション
-def index(request):
-    # 最新5件の質問
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+## 汎用ビュー使用
+# defじゃないことに注意
+class IndexView(generic.ListView):
+    # コンテキスト変数を指定
+    # default: 'polls/question_list.html'(<app_name>/<model_name>_list.html)
+    template_name = 'polls/index.html'
+    # default: question_list
+    context_object_name = 'latest_question_list'
 
-    # コントローラーからビューに渡したい変数
-    context = {
-        'latest_question_list': latest_question_list,
-    }
+    def get_queryset(self):
+        # 最新5件の質問を返す
+        return Question.objects.order_by('-pub_date')[:5]
 
-    # 以下と同じだが、長いので使わないほうがよさそう…
-    # return HttpResponse(loader.get_template('polls/index.html').render(context, request))
-    # 無理やりRailsに例えると`render('index', context: context)`かな？
-    return render(request, 'polls/index.html', context)
+class DetailView(generic.DetailView):
+    # ここで表示したいモデルの名前を指定
+    model = Question
+    # default: 'polls/question_detail.html'(<app_name>/<model_name>_detail.html)
+    template_name = 'polls/detail.html'
 
-def detail(request, question_id):
-    # 指定された条件に合致するレコードがQuestionモデルにないときに例外
-    # objects.filterに相当する`get_list_or_404`もある
-    question = get_object_or_404(Question, pk=question_id)
-    # 以下と同じ
-    # try:
-    #     question = Question.objects.get(pk=question_id)
-    # except Question.DoesNotExist:
-    #     raise Http404("Question does not exist.")
-    return render(request, 'polls/detail.html', {'question': question})
-
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+class ResultsView(generic.DetailView):
+    model = Question
+    # もちろん同じ汎用ビューに違うテンプレートを指定できる
+    template_name = 'polls/results.html'
 
 ## ユーザーのpostを受け取る
 def vote(request, question_id):
@@ -63,6 +60,37 @@ def vote(request, question_id):
         # ハードコーディング防止のためにreverse()を使っている
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
+### 以下汎用ビュー使用前
+## pollsアプリケーション（Railsでいうコントローラー）の各アクション
+# def index(request):
+#     # 最新5件の質問
+#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
+
+#     # コントローラーからビューに渡したい変数
+#     context = {
+#         'latest_question_list': latest_question_list,
+#     }
+
+#     # 以下と同じだが、長いので使わないほうがよさそう…
+#     # return HttpResponse(loader.get_template('polls/index.html').render(context, request))
+#     # 無理やりRailsに例えると`render('index', context: context)`かな？
+#     return render(request, 'polls/index.html', context)
+
+# def detail(request, question_id):
+#     # 指定された条件に合致するレコードがQuestionモデルにないときに例外
+#     # objects.filterに相当する`get_list_or_404`もある
+#     question = get_object_or_404(Question, pk=question_id)
+#     # 以下と同じ
+#     # try:
+#     #     question = Question.objects.get(pk=question_id)
+#     # except Question.DoesNotExist:
+#     #     raise Http404("Question does not exist.")
+#     return render(request, 'polls/detail.html', {'question': question})
+
+# def results(request, question_id):
+#     response = "You're looking at the results of question %s."
+#     return HttpResponse(response % question_id)
+
+# def results(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, 'polls/results.html', {'question': question})
