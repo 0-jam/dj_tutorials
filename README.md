@@ -30,5 +30,13 @@ latest_question_list = Question.objects.order_by("-pub_date")[:5]
 output = ', '.join([q.question_text for q in latest_question_list])
 ```
 
+- [ユニットテストで使うメソッド集][pyutest]
+    - `assertFalse()`というメソッドもあるが、pollsアプリケーションのテストは`assertIs()`で値を`False`そのものと比較している
+    - [Python3でFalse扱いされる数値][pyfalse]
+        - `assertFalse()`はこれらと一致しているかを判定するらしい
+        - `None`, `False`, 各種カラの値（ゼロや空文字列など）
+
 [django]: http://djangoproject.jp/
 [djtut]: https://docs.djangoproject.com/ja/2.1/intro/
+[pyutest]: https://docs.python.jp/3/library/unittest.html
+[pyfalse]: https://docs.python.jp/3/library/stdtypes.html#truth-value-testing

@@ -47,7 +47,10 @@ class Question(models.Model):
     # q = Question.objects.get(id=1)
     # q.was_published_recently()
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+
+        # pub_dateが1日以内かつ今より過去に作られた場合にTrue
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
 ### 選択肢
 # $ rails g model choice question:references choice_text:string votes:integer
