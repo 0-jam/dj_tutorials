@@ -27,7 +27,6 @@
 ## Memo
 
 - Railsでいう`latest_questions.pluck(question_text)`
-    - pluck的なのないのかな？
 
 ```python
 latest_questions = Question.objects.order_by("-pub_date")[:5]
