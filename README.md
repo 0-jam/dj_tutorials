@@ -1,26 +1,14 @@
 # Django tutorials
 
-- [Django][django]2.1の[チュートリアル][djtut]をなぞるだけ
+- [Django][django]（当時2.1）の[チュートリアル][djtut]をなぞるだけ
 - 一部Railsで同じことをするためのコマンドなどをコメントに書いている
 - Python 3.8.2,  Django 3.0.4
 
 ---
 
-1. [Progress](#progress)
 1. [Memo](#memo)
 
 ---
-
-## Progress
-
-- [x] [Tutorial 01](https://docs.djangoproject.com/ja/2.1/intro/tutorial01/)
-- [x] [Tutorial 02](https://docs.djangoproject.com/ja/2.1/intro/tutorial02/)
-- [x] [Tutorial 03](https://docs.djangoproject.com/ja/2.1/intro/tutorial03/)
-- [x] [Tutorial 04](https://docs.djangoproject.com/ja/2.1/intro/tutorial04/)
-- [x] [Tutorial 05](https://docs.djangoproject.com/ja/2.1/intro/tutorial05/)
-    - [テスト参考][djtesting]
-- [x] [Tutorial 06](https://docs.djangoproject.com/ja/2.1/intro/tutorial06/)
-- [x] [Tutorial 07](https://docs.djangoproject.com/ja/2.1/intro/tutorial07/)
 
 ## Memo
 
@@ -40,7 +28,6 @@ output = ', '.join([q.question_text for q in latest_questions])
     - チュートリアル中では _リロードすれば（中略）変わったはず_ とあるが、単にリロードするとstyle.cssをロードするときに404エラー
 
 [django]: http://djangoproject.jp/
-[djtut]: https://docs.djangoproject.com/ja/2.1/intro/
+[djtut]: https://docs.djangoproject.com/en/3.0/
 [pyutest]: https://docs.python.jp/3/library/unittest.html
 [pyfalse]: https://docs.python.jp/3/library/stdtypes.html#truth-value-testing
-[djtesting]: https://docs.djangoproject.com/ja/2.1/topics/testing/
