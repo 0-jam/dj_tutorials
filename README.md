@@ -1,8 +1,8 @@
-# Django test
+# Django tutorials
 
 - [Django][django]2.1の[チュートリアル][djtut]をなぞるだけ
 - 一部Railsで同じことをするためのコマンドなどをコメントに書いている
-- Python 3.7.0,  Django 2.1
+- Python 3.8.2,  Django 3.0.4
 
 ---
 
@@ -18,8 +18,6 @@
 - [x] [Tutorial 03](https://docs.djangoproject.com/ja/2.1/intro/tutorial03/)
 - [x] [Tutorial 04](https://docs.djangoproject.com/ja/2.1/intro/tutorial04/)
 - [x] [Tutorial 05](https://docs.djangoproject.com/ja/2.1/intro/tutorial05/)
-    - [ ] ResultsViewのテストも作ってみよう
-    - [ ] 選択肢がない質問も表示しないようにしよう
     - [テスト参考][djtesting]
 - [x] [Tutorial 06](https://docs.djangoproject.com/ja/2.1/intro/tutorial06/)
 - [x] [Tutorial 07](https://docs.djangoproject.com/ja/2.1/intro/tutorial07/)

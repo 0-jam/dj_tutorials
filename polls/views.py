@@ -11,7 +11,8 @@ from .models import Question, Choice
 
 # Create your views here.
 
-## 汎用ビュー使用
+
+# 汎用ビュー使用
 # defじゃないことに注意
 class IndexView(generic.ListView):
     # コンテキスト変数を指定
@@ -26,6 +27,7 @@ class IndexView(generic.ListView):
         # pub_date <= timezone.now() のようには書けない
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
+
 class DetailView(generic.DetailView):
     # ここで表示したいモデルの名前を指定
     model = Question
@@ -36,12 +38,14 @@ class DetailView(generic.DetailView):
         # 未来の質問を除外する
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+
 class ResultsView(generic.DetailView):
     model = Question
     # もちろん同じ汎用ビューに違うテンプレートを指定できる
     template_name = 'polls/results.html'
 
-## ユーザーのpostを受け取る
+
+# ユーザーのpostを受け取る
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
@@ -68,8 +72,8 @@ def vote(request, question_id):
         # ハードコーディング防止のためにreverse()を使っている
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-### 以下汎用ビュー使用前
-## pollsアプリケーション（Railsでいうコントローラー）の各アクション
+# 以下汎用ビュー使用前
+# pollsアプリケーション（Railsでいうコントローラー）の各アクション
 # def index(request):
 #     # 最新5件の質問
 #     latest_questions = Question.objects.order_by("-pub_date")[:5]

@@ -10,10 +10,11 @@ from .models import Question
 
 # Create your tests here.
 
-## モデルのテストクラス
+
+# モデルのテストクラス
 # テストメソッド名は"test"で始めなくてはいけない
 class QuestionModelTests(TestCase):
-    ## pub_dateが未来になっているときに「最近作られた」と誤判断されないか？
+    # pub_dateが未来になっているときに「最近作られた」と誤判断されないか？
     def test_was_published_recently_with_future_question(self):
         # あるQuestionオブジェクトfuture_questionのpub_dateが未来（ここでは30日後）になっているとき、
         # future_question.was_published_recently()はFalseを返さなくてはならない
@@ -22,7 +23,7 @@ class QuestionModelTests(TestCase):
 
         self.assertIs(future_question.was_published_recently(), False)
 
-    ## pub_dateが過去になっているときに「最近作られた」と誤判断されないか？
+    # pub_dateが過去になっているときに「最近作られた」と誤判断されないか？
     def test_was_published_recently_with_old_question(self):
         # あるQuestionオブジェクトold_questionのpub_dateが過去（ここでは1日（24時間0分）1秒前）になっているとき、
         # old_question.was_published_recently()はFalseを返さなくてはならない
@@ -31,7 +32,7 @@ class QuestionModelTests(TestCase):
 
         self.assertIs(old_question.was_published_recently(), False)
 
-    ## pub_dateが最近になっているときに「最近作られた」と正しく判断されるか？
+    # pub_dateが最近になっているときに「最近作られた」と正しく判断されるか？
     def test_was_published_recently_with_recent_question(self):
         # あるQuestionオブジェクトrecent_questionのpub_dateが直近1日以内（ここでは23時間59分59秒前）になっているとき、
         # recent_question.was_published_recently()はTrueを返さなくてはならない
@@ -40,14 +41,16 @@ class QuestionModelTests(TestCase):
 
         self.assertIs(recent_question.was_published_recently(), True)
 
-## Questionオブジェクトを作る
+
+# Questionオブジェクトを作る
 def create_question(question_text, days):
     time = timezone.now() + datetime.timedelta(days=days)
 
     return Question.objects.create(question_text=question_text, pub_date=time)
 
-### ビューのテストクラス
-## index
+
+# ビューのテストクラス
+# index
 class QuestionIndexViewTests(TestCase):
     # 質問が存在しないときの表示、各変数の状態
     def test_no_questions(self):
@@ -107,7 +110,8 @@ class QuestionIndexViewTests(TestCase):
             ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
 
-## detail
+
+# detail
 class QuestionDetailViewTests(TestCase):
     # 未来の質問が表示されないことを確認
     def test_future_question(self):
