@@ -26,6 +26,7 @@ output = ', '.join([q.question_text for q in latest_questions])
         - `None`, `False`, 各種カラの値（ゼロや空文字列など）
 - チュートリアル6で扱う静的ファイルは、追加したあとサーバーを再起動する必要がある？
     - チュートリアル中では _リロードすれば（中略）変わったはず_ とあるが、単にリロードするとstyle.cssをロードするときに404エラー
+- `$ python manage.py createsuperuser`で新しく管理者を作れる
 
 [django]: http://djangoproject.jp/
 [djtut]: https://docs.djangoproject.com/en/3.0/

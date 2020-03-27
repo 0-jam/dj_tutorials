@@ -9,6 +9,8 @@ autopep8 = "*"
 
 [packages]
 django = "*"
+django-registration = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
