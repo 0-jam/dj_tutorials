@@ -9,7 +9,6 @@ autopep8 = "*"
 
 [packages]
 django = "*"
-django-registration = "*"
 python-dotenv = "*"
 
 [requires]
